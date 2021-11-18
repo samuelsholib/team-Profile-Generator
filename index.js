@@ -5,7 +5,8 @@ const jest = require('jest');
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const html = require("./Src/tryHtml");
+const html = require("./Src/getHtml");
+const finalHtml = require("./dist/index.html");
 
 
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -13,10 +14,6 @@ const appendFileAsync = util.promisify(fs.appendFile);
 
 let teamArray = [];
 let teamString = ``;
-
-console.clear();
-console.log("---------------------------------------------");
-console.log("Team Portfolio Generator by nosremetnarg")
 
 // Function to run the application
 async function generateHTML() {
@@ -31,26 +28,15 @@ async function generateHTML() {
 
         console.clear();
         console.log("---------------------------------------------");
-        console.log("Generating index.html file....");
-        console.log("---------------------------------------------");
-
         writeFileAsync("./dist/index.html", finalHtml);
-
-        console.clear();
-        console.log("---------------------------------------------");
-        console.log("index.html file created successfully");
-        console.log("---------------------------------------------");
 
     } catch (err) {
         return console.log(err);
     }
 }
 
-
-
 //  prompted inquirer questions
 
-// Inquirer prompts to collect user data
 async function prompt() {
     let responseDone = "";
 
@@ -144,7 +130,7 @@ async function prompt() {
         responseDone = await inquirer.prompt([{
             type: "list",
             name: "finish",
-            message: "Do you want to continue?: ",
+            message: "Do you want to add an other employee?: ",
             choices: [
                 "Yes",
                 "No"
