@@ -2,9 +2,11 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const util = require('util');
 const jest = require('jest');
+
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+
 const html = require("./Src/getHtml");
 const finalHtml = require("./dist/index.html");
 
@@ -49,25 +51,9 @@ async function prompt() {
                     name: "name",
                     validate: function validateName(name) {
                         return name !== "";
-                    }
-                },
-                {
-                    type: "input",
-                    message: " Enter employee's ID:",
-                    name: "id",
-                    validate: function validateName(name) {
-                        return name !== "";
-                    }
+                    },
                 },
 
-                {
-                    type: "input",
-                    message: "Enter employee's email adress:",
-                    name: "email",
-                    validate: function validateName(name) {
-                        return name !== "";
-                    }
-                },
                 {
                     type: "list",
                     message: "what is the employee's role?",
@@ -83,28 +69,67 @@ async function prompt() {
             let response2 = ""
 
             if (response.role === "Engineer") {
-                response2 = await inquirer.prompt([{
-                    type: "input",
-                    name: "x",
-                    message: "What is the employee's github username?: ",
-                    validate: function validateName(name) {
-                        return name !== "";
+                response2 = await inquirer.prompt([
+
+                    {
+                        type: "input",
+                        message: "what is Engineers email adress:",
+                        name: "email",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        }
                     },
-                }, ]);
+                    {
+                        type: "input",
+                        message: " Enter engineer's ID:",
+                        name: "id",
+                        validate: function validateName(name) {
+
+                            return name !== "";
+                        }
+                    },
+                    {
+                        type: "input",
+                        name: "github",
+                        message: "What is engineers github username?: ",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        }
+
+                    },
+                ]);
+
 
                 // add to team Arr
-                const engineer = new Engineer(response.name, response.id, response.email, response2.x);
+                const engineer = new Engineer(response.name, response.id, response.email, response2);
                 teamArray.push(engineer);
 
             } else if (response.role === "Manager") {
                 response2 = await inquirer.prompt([{
-                    type: "input",
-                    name: "x",
-                    message: "What is the employee's office number?: ",
-                    validate: function validateName(name) {
-                        return name !== "";
+                        type: "input",
+                        name: "email",
+                        message: "What is the managers email adress? ",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        },
                     },
-                }, ]);
+                    {
+                        type: "input",
+                        message: " Enter managers ID:",
+                        name: "id",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        }
+                    },
+                    {
+                        type: "input",
+                        name: "number",
+                        message: "What is the managers office number? ",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        }
+                    },
+                ]);
 
                 // add to team Arr
                 const manager = new Manager(response.name, response.id, response.email, response2.x);
@@ -112,13 +137,31 @@ async function prompt() {
 
             } else if (response.role === "Intern") {
                 response2 = await inquirer.prompt([{
-                    type: "input",
-                    name: "x",
-                    message: "What school is employee attending: ",
-                    validate: function validateName(name) {
-                        return name !== "";
+                        type: "input",
+                        name: "email",
+                        message: "What is the intern's email adress? ",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        }
                     },
-                }, ]);
+                    {
+                        type: "input",
+                        message: " Enter interns ID:",
+                        name: "id",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        }
+                    },
+
+                    {
+                        type: "input",
+                        name: "school",
+                        message: "What school does the intern attend?",
+                        validate: function validateName(name) {
+                            return name !== "";
+                        },
+                    },
+                ]);
 
                 // add to team Arr
                 const intern = new Intern(response.name, response.id, response.email, response2.x);
@@ -130,7 +173,7 @@ async function prompt() {
         responseDone = await inquirer.prompt([{
             type: "list",
             name: "finish",
-            message: "Do you want to add an other employee?: ",
+            message: "Do you want to add an other employee?",
             choices: [
                 "Yes",
                 "No"
@@ -138,5 +181,5 @@ async function prompt() {
         }, ]);
     } while (responseDone.finish === "Yes");
 }
-// initial program
+// initiate the program
 generateHTML();
