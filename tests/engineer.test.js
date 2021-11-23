@@ -16,5 +16,5 @@ test("getGithub", () => {
 test("getRole function", () => {
     const testValue = "Engineer";
     const employee = new Engineer("Emmanuel", 1, "emmanuel.dejene@jinka.com", testValue);
-    expect(employee.getRole).toBe(testValue);
+    expect(employee.getRole()).toBe(testValue);
 });

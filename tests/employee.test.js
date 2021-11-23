@@ -2,7 +2,7 @@ const Employee = require("../lib/Employee");
 
 test('creates employee object', () => {
     const employee = new Employee();
-    expect(typof(employee)).toBe("object");
+    expect(typeof employee).toBe("object");
 });
 
 test('set Employee name', () => {
@@ -36,9 +36,9 @@ test('get ID from getID', () => {
 });
 
 test('get email from getEmail', () => {
-    const email = "emmanuel.dejene@jinka.com"
-    const employee = new Employee('Employee', 1, testEmail);
-    expect(employee.getEmail()).toBe(testEmail);
+    const testemail = "emmanuel.dejene@jinka.com"
+    const employee = new Employee('Employee', 1, testemail);
+    expect(employee.getEmail()).toBe(testemail);
 });
 
 test('get role from getRole', () => {
